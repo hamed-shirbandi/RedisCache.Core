@@ -17,9 +17,6 @@ namespace RedisCache.Core.Example.Controllers
         }
 
 
-
-
-
         // GET api/values/5
         [HttpGet()]
         public ValueModel Get( )
