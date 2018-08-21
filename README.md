@@ -23,7 +23,7 @@ Then :
 
 1- install package from nuget
 
-2- add required services  as below :
+2- add required services to Startup class as below :
 ```code
   services.AddRedisCache(options =>
             {
