@@ -23,6 +23,14 @@ namespace RedisCache.Core.Example
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+            //add RedisCache.Core services 
+            services.AddRedisCache(options =>
+            {
+                options.Configuration = Configuration["RedisCache:Connection"];
+                options.InstanceName = Configuration["RedisCache:InstanceName"];
+            });
+
             services.AddMvc();
         }
 

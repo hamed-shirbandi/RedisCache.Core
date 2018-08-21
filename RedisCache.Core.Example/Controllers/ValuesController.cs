@@ -9,36 +9,36 @@ namespace RedisCache.Core.Example.Controllers
     [Route("api/[controller]")]
     public class ValuesController : Controller
     {
-        // GET api/values
-        [HttpGet]
-        public IEnumerable<string> Get()
+        private readonly IRedisCacheService _redisCacheService;
+
+        public ValuesController(IRedisCacheService redisCacheService)
         {
-            return new string[] { "value1", "value2" };
+            _redisCacheService = redisCacheService;
         }
+
+
+
+
 
         // GET api/values/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet()]
+        public ValueModel Get( )
         {
-            return "value";
+            ValueModel value = default(ValueModel);
+            if (!_redisCacheService.TryGetValue(key: "MyKey", result: out value))
+            {
+                value = new ValueModel {Prop1= "Prop 1", Prop2= "Prop 2" };//get data from db instead
+                _redisCacheService.Set(key: "MyKey", data: value,cacheTimeInMinutes:60);
+            }
+
+            return value;
         }
 
-        // POST api/values
-        [HttpPost]
-        public void Post([FromBody]string value)
-        {
-        }
+    }
 
-        // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-
-        // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
+    public class ValueModel
+    {
+        public string Prop1 { get; set; }
+        public string Prop2 { get; set; }
     }
 }
