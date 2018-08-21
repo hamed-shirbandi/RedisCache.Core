@@ -7,7 +7,7 @@ namespace RedisCache.Core.Tests
     {
         [TestMethod]
         public void TestMethod1()
-        { 
+        {  
         }
     }
 }
