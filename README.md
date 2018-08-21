@@ -12,7 +12,12 @@ You can also view the [package page](https://www.nuget.org/packages/RedisCache.C
 
 # How to use ?
 
-First you must install redis serve. in quickly way you can install chocolaty and [install redis](https://chocolatey.org/packages/redis-64/) through it. then execute "redis-server" command in cmd;
+First you must install redis server. in quickly way you can install chocolaty and [install redis](https://chocolatey.org/packages/redis-64/) through it. then run following command in cmd (run as administrator);
+
+```code
+C:\> redis-server 
+```
+
 
 Then :
 
