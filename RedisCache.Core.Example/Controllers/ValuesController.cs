@@ -9,7 +9,7 @@ namespace RedisCache.Core.Example.Controllers
 {
     [Route("api/[controller]")]
     public class ValuesController : Controller
-    {
+    { 
         private readonly IRedisCacheService _redisCacheService;
         private readonly IEnumerable<ValueModel> _values;
 
