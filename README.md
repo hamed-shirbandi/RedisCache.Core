@@ -33,31 +33,65 @@ Then :
 ```
 3- Use IRedisCacheService in your app :
 ```code
-   [Route("api/[controller]")]
+      [Route("api/[controller]")]
     public class ValuesController : Controller
     {
         private readonly IRedisCacheService _redisCacheService;
+        private readonly IEnumerable<ValueModel> _values;
 
         public ValuesController(IRedisCacheService redisCacheService)
         {
             _redisCacheService = redisCacheService;
+            _values = GetSampleValues();
         }
 
 
-        // GET api/values/5
+        // GET api/values
         [HttpGet()]
-        public ValueModel Get( )
+        public IEnumerable<ValueModel> Get()
         {
-            ValueModel value = default(ValueModel);
-            if (!_redisCacheService.TryGetValue(key: "MyKey", result: out value))
+            if (!_redisCacheService.TryGetValue(key: ValuesCacheKeyTemplate.AllValuesCacheKey, result: out IEnumerable<ValueModel> values))
             {
-                value = new ValueModel {Prop1= "Prop 1", Prop2= "Prop 2" };//get data from db instead
-                _redisCacheService.Set(key: "MyKey", data: value,cacheTimeInMinutes:60);
+                values = _values;//get data from db instead
+                _redisCacheService.Set(key: ValuesCacheKeyTemplate.AllValuesCacheKey, data: values, cacheTimeInMinutes: 60);
             }
 
-            return value;
+            return values;
         }
 
+
+
+        // GET api/values/1
+        [HttpGet("{id}")]
+        public ValueModel Get(int id)
+        {
+            var cacheKey = string.Format(ValuesCacheKeyTemplate.ValueByIdCacheKey, id);
+            return _redisCacheService.GetOrSet(key: cacheKey, factory:()=> _values.FirstOrDefault(v => v.Id == id), cacheTimeInMinutes: 60);
+
+        }
+
+
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        private IEnumerable<ValueModel> GetSampleValues()
+        {
+            return new List<ValueModel>
+            {
+                new ValueModel{Id=1,Prop1="Prop 1",Prop2="Prop 2"},
+                new ValueModel{Id=2,Prop1="Prop 3",Prop2="Prop 4"},
+                new ValueModel{Id=3,Prop1="Prop 5",Prop2="Prop 6"},
+                new ValueModel{Id=4,Prop1="Prop 7",Prop2="Prop 8"},
+                new ValueModel{Id=5,Prop1="Prop 9",Prop2="Prop 10"},
+            };
+
+
+
+        }
     }
+
 ```
 
