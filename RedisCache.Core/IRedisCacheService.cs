@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 
 namespace RedisCache.Core
 {
@@ -34,8 +35,9 @@ namespace RedisCache.Core
         /// <param name="key"></param>
         /// <param name="data"></param>
         /// <param name="cacheTimeInMinutes"></param>
-        /// <returns></returns>
-        Task SetAsync(string key, object data, int cacheTimeInMinutes);
+        void Set(string key, object data, int cacheTimeInMinutes);
+
+
 
 
         /// <summary>
@@ -44,7 +46,20 @@ namespace RedisCache.Core
         /// <param name="key"></param>
         /// <param name="data"></param>
         /// <param name="cacheTimeInMinutes"></param>
-        void Set(string key, object data, int cacheTimeInMinutes);
+        /// <returns></returns>
+        Task SetAsync(string key, object data, int cacheTimeInMinutes);
+
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="cacheKey"></param>
+        /// <param name="factory"></param>
+        /// <param name="cacheTimeInMinutes"></param>
+        /// <returns></returns>
+        T GetOrSet<T>(string key, Func<T> factory, int cacheTimeInMinutes);
 
 
 

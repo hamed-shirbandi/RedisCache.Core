@@ -121,6 +121,34 @@ namespace RedisCache.Core
         /// <summary>
         /// 
         /// </summary>
+        public T GetOrSet<T>(string key, Func<T> factory, int cacheTimeInMinutes)
+        {
+            if (TryGetValue<T>(key, out var result))
+            {
+                return result;
+            }
+
+            lock (TypeLock<T>.Lock)
+            {
+                if (TryGetValue(key, out result))
+                {
+                    return result;
+                }
+
+                result = factory();
+                Set(key, result, cacheTimeInMinutes);
+
+                return result;
+            }
+        }
+
+
+
+
+
+        /// <summary>
+        /// 
+        /// </summary>
         public bool TryGetValue<T>(string key, out T result)
         {
             var json = _redisCashe.GetString(key);
@@ -132,6 +160,17 @@ namespace RedisCache.Core
 
             result = JsonConvert.DeserializeObject<T>(json);
             return true;
+        }
+
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        private static class TypeLock<T>
+        {
+            public static object Lock { get; } = new object();
         }
     }
 }
