@@ -2,6 +2,8 @@
 
 Simple library to Using [Redis](http://redis.io) Cache In .NET Core Projects
 
+[Article in persian](http://www.codeblock.ir/article/44/%D9%BE%DB%8C%D8%A7%D8%AF%D9%87-%D8%B3%D8%A7%D8%B2%DB%8C-redis-cache-%D8%AF%D8%B1-asp-net-core)
+
 # Install via NuGet
 
 To install RedisCache.Core, run the following command in the Package Manager Console
