@@ -55,11 +55,11 @@ namespace RedisCache.Core.Example.Controllers
         {
             return new List<ValueModel>
             {
-                new ValueModel{Id=1,Prop1="Prop 1",Prop2="Prop 2"},
-                new ValueModel{Id=2,Prop1="Prop 3",Prop2="Prop 4"},
-                new ValueModel{Id=3,Prop1="Prop 5",Prop2="Prop 6"},
-                new ValueModel{Id=4,Prop1="Prop 7",Prop2="Prop 8"},
-                new ValueModel{Id=5,Prop1="Prop 9",Prop2="Prop 10"},
+                new ValueModel{Id=1,Prop1="Prop 1",Prop2="Prop 2",Array= new string[] {"arr1","arr2"} },
+                new ValueModel{Id=2,Prop1="Prop 3",Prop2="Prop 4",Array= new string[] {"arr1","arr2"}},
+                new ValueModel{Id=3,Prop1="Prop 5",Prop2="Prop 6",Array= new string[] {"arr1","arr2"}},
+                new ValueModel{Id=4,Prop1="Prop 7",Prop2="Prop 8",Array= new string[] {"arr1","arr2"}},
+                new ValueModel{Id=5,Prop1="Prop 9",Prop2="Prop 10",Array= new string[] {"arr1","arr2"}},
             };
 
 
