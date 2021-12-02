@@ -13,7 +13,7 @@ namespace RedisCache.Core.Example.Models
         /// <remarks>
         /// {0} : Value Id
         /// </remarks>
-        public static string ValueByIdCacheKey => "Values.Id-{0}";
+        public static string ValueByIdCacheKey => "sValues.Id-{0}";
 
 
 
@@ -23,7 +23,7 @@ namespace RedisCache.Core.Example.Models
         /// <remarks>
         /// 
         /// </remarks>
-        public static string AllValuesCacheKey => "Values";
+        public static string AllValuesCacheKey => "sValues";
 
     }
 }

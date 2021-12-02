@@ -8,8 +8,10 @@ namespace RedisCache.Core.Example.Models
     public class ValueModel
     {
         public int Id { get; set; }
-        public string Prop1 { get; set; }
-        public string Prop2 { get; set; }
-        public string[] Array { get; set; }
+        public string Meesage { get; set; }
+        public string RandomCode { get; set; }
+        public string CreateTime { get; set; }
     }
+
+   
 }

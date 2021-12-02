@@ -1,25 +1,35 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
+﻿
+using RedisCache.Core;
 
-namespace RedisCache.Core.Example
+var builder = WebApplication.CreateBuilder(args);
+
+//add RedisCache.Core services 
+builder.Services.AddRedisCache(options =>
 {
-    public class Program
-    {
-        public static void Main(string[] args)
-        {
-            BuildWebHost(args).Run();
-        }
+    options.Configuration = builder.Configuration["RedisCache:Connection"];
+    options.InstanceName = builder.Configuration["RedisCache:InstanceName"];
+});
 
-        public static IWebHost BuildWebHost(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>()
-                .Build();
-    }
+builder.Services.AddControllersWithViews();
+
+var app = builder.Build();
+
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseDeveloperExceptionPage();
 }
+
+
+app.UseStaticFiles();
+app.UseRouting();
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllerRoute(
+        name: "default",
+        pattern: "{controller=Home}/{action=Index}/{id?}");
+
+});
+
+app.Run();
