@@ -11,15 +11,15 @@ namespace RedisCache.Core
     /// </summary>
     public class RedisCacheService : IRedisCacheService
     {
-        private readonly IDistributedCache _redisCashe;
+        private readonly IDistributedCache _redisCache;
 
 
         /// <summary>
         /// 
         /// </summary>
-        public RedisCacheService(IDistributedCache redisCashe)
+        public RedisCacheService(IDistributedCache redisCache)
         {
-            _redisCashe = redisCashe;
+            _redisCache = redisCache;
         }
 
 
@@ -30,7 +30,7 @@ namespace RedisCache.Core
         /// </summary>
         public T Get<T>(string key)
         {
-            var json = _redisCashe.GetString(key);
+            var json = _redisCache.GetString(key);
             if (json == null)
             {
                 return default(T);
@@ -48,7 +48,7 @@ namespace RedisCache.Core
         /// </summary>
         public async Task<T> GetAsync<T>(string key)
         {
-            var json = await _redisCashe.GetStringAsync(key);
+            var json = await _redisCache.GetStringAsync(key);
             if (json == null)
             {
                 return default(T);
@@ -65,7 +65,7 @@ namespace RedisCache.Core
         /// </summary>
         public void Remove(string key)
         {
-            _redisCashe.Remove(key);
+            _redisCache.Remove(key);
         }
 
 
@@ -76,7 +76,7 @@ namespace RedisCache.Core
         /// </summary>
         public async Task RemoveAsync(string key)
         {
-            await _redisCashe.RemoveAsync(key);
+            await _redisCache.RemoveAsync(key);
         }
 
 
@@ -94,7 +94,7 @@ namespace RedisCache.Core
             //set options
             var options = new DistributedCacheEntryOptions().SetAbsoluteExpiration(expiresIn);
 
-            _redisCashe.SetString(key, json, options);
+            _redisCache.SetString(key, json, options);
 
         }
 
@@ -112,7 +112,7 @@ namespace RedisCache.Core
             //set options
             var options = new DistributedCacheEntryOptions().SetAbsoluteExpiration(expiresIn);
 
-            await _redisCashe.SetStringAsync(key, json, options);
+            await _redisCache.SetStringAsync(key, json, options);
         }
 
 
@@ -151,7 +151,7 @@ namespace RedisCache.Core
         /// </summary>
         public bool TryGetValue<T>(string key, out T result)
         {
-            var json = _redisCashe.GetString(key);
+            var json = _redisCache.GetString(key);
             if (json == null)
             {
                 result = default(T);
